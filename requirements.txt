@@ -1,5 +1,4 @@
-# Install TensorFlow strictly from the local custom ROCm 7.11 wheel.
-# Small Python dependencies are allowed to come from PyPI.
-tensorflow @ file:///opt/rocm/wheels/tensorflow_rocm_custom/tensorflow-2.20.0.dev0+selfbuilt-cp312-cp312-linux_x86_64.whl
+# Project-local Python dependencies only.
+# Install TensorFlow first with ./setup_rocm_venv.sh.
 numpy<2
 protobuf<7
