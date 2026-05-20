@@ -48,6 +48,13 @@ def _maybe_reexec_with_rocm_env() -> None:
     if not all(p in ld.split(":") for p in want_ld):
         env["LD_LIBRARY_PATH"] = ":".join(want_ld + ([ld] if ld else []))
 
+    # Preload rccl stub + rsmi (no RCCL on gfx1031, rsmi not in amdhip64 chain).
+    for lib in (f"{rocm}/lib/librccl.so.1", f"{rocm}/lib/librocm_smi64.so"):
+        if os.path.exists(lib):
+            cur = env.get("LD_PRELOAD", "")
+            if lib not in cur.split(":"):
+                env["LD_PRELOAD"] = ":".join([lib] + ([cur] if cur else []))
+
     env.setdefault("TF_ROCM_DISABLE_HIPBLASLT", "1")
     env.setdefault("TF_ROCM_USE_HIPBLASLT", "0")
     env.setdefault("TF_ROCM_DISABLE_HIPBLASLT_INIT", "1")
