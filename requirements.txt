@@ -1,4 +1,4 @@
 # Project-local Python dependencies only.
 # Install TensorFlow first with ./setup_rocm_venv.sh.
-numpy<2
+numpy>=2,<3
 protobuf<7
